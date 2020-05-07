@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import Input from '../components/Input/Input';
 import LoginScene from '../components/LoginScene/LoginScene';
-import {addUserInputs} from "../utils/addUserInputs";
+import { addUserInputs } from '../utils/addUserInputs';
+import Checkbox from '../components/Checkbox/Checkbox';
+import SelectMenu from '../components/SelectMenu/SelectMenu';
 
 const StyledWrapper = styled.section`
   width: 90%;
@@ -11,6 +13,7 @@ const StyledWrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto;
 `;
 
 const StyledForm = styled(Form)`
@@ -80,6 +83,8 @@ const LandingPage = () => {
                   placeholder={item.placeholder}
                 />
               ))}
+              <Checkbox />
+              <SelectMenu />
               <StyledButton>Submit</StyledButton>
             </StyledForm>
           );
