@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import Input from '../components/Input/Input';
 import LoginScene from '../components/LoginScene/LoginScene';
+import {addUserInputs} from "../utils/addUserInputs";
 
 const StyledWrapper = styled.section`
   width: 90%;
@@ -20,6 +21,7 @@ const StyledForm = styled(Form)`
   align-items: center;
   flex-direction: column;
   position: relative;
+  padding: 0 2rem;
 
   ${({ theme }) => theme.mq.tablet} {
     width: 50%;
@@ -51,31 +53,37 @@ const LandingPage = () => {
   return (
     <StyledWrapper>
       <Formik
-        initialValues={{ login: '', password: '' }}
+        initialValues={{
+          name: '',
+          lastName: '',
+          albumNumber: '',
+          isAdmin: false,
+          universityId: 0,
+          login: '',
+          password: '',
+          course: ''
+        }}
         onSubmit={(values) => console.log(values)}
       >
-        {({ values, handleChange, handleBlur }) => (
-          <StyledForm>
-            <StyledHeading>Login</StyledHeading>
-            <Input
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              type={'text'}
-              value={values.email}
-              name={'login'}
-              placeholder={'login'}
-            />
-            <Input
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              type={'password'}
-              value={values.password}
-              name={'password'}
-              placeholder={'Password'}
-            />
-            <StyledButton>Submit</StyledButton>
-          </StyledForm>
-        )}
+        {({ values, handleChange, handleBlur, errors }) => {
+          const userInputs = addUserInputs(values, errors);
+          return (
+            <StyledForm>
+              <StyledHeading>Dodaj użytkownika</StyledHeading>
+              {userInputs.map((item) => (
+                <Input
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  type={item.type}
+                  value={item.value}
+                  name={item.name}
+                  placeholder={item.placeholder}
+                />
+              ))}
+              <StyledButton>Submit</StyledButton>
+            </StyledForm>
+          );
+        }}
       </Formik>
       <LoginScene />
     </StyledWrapper>

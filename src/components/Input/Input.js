@@ -21,7 +21,7 @@ const InputWrapper = styled.div`
   }
 
   ${({ theme }) => theme.mq.standard} {
-    width: 450px;
+    width: 500px;
   }
 `;
 
@@ -44,7 +44,14 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ type, value, name, handleChange, handleBlur, placeholder }) => {
+const IconWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+`;
+
+const Input = ({ type, value, name, handleChange, handleBlur, placeholder, children }) => {
   return (
     <InputWrapper>
       <StyledInput
@@ -55,6 +62,7 @@ const Input = ({ type, value, name, handleChange, handleBlur, placeholder }) => 
         name={name}
         placeholder={placeholder}
       />
+      <IconWrapper>{children}</IconWrapper>
     </InputWrapper>
   );
 };
@@ -65,7 +73,8 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  children: PropTypes.node
 };
 
 export default Input;
