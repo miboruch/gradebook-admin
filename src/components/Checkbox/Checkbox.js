@@ -29,8 +29,8 @@ const StyledCheckbox = styled.input`
 const Checkbox = ({ handleChange }) => {
   return (
     <CheckboxWrapper>
-      <StyledCheckbox type='checkbox' name='isAdmin' onChange={handleChange} />
-      <label htmlFor={'isAdmin'}>admin</label>
+      <StyledCheckbox type='checkbox' name='admin' onChange={handleChange} />
+      <label htmlFor={'admin'}>admin</label>
     </CheckboxWrapper>
   );
 };

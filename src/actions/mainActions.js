@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { FETCH_FAILURE, LOAD_START, SET_UNIVERSITIES, SET_COURSES } from '../reducers/mainReducer';
+import {
+  FETCH_FAILURE,
+  LOAD_START,
+  SET_UNIVERSITIES,
+  SET_COURSES,
+  POST_ERROR,
+  POST_SUCCESS
+} from '../reducers/mainReducer';
 
 const loadStart = () => {
   return {
@@ -28,6 +35,19 @@ const fetchFailure = (error) => {
   };
 };
 
+const postError = (error) => {
+  return {
+    type: POST_ERROR,
+    payload: error
+  };
+};
+
+const postSuccess = () => {
+  return {
+    type: POST_SUCCESS
+  };
+};
+
 export const fetchUniversities = () => async (dispatch) => {
   dispatch(loadStart());
 
@@ -49,5 +69,17 @@ export const fetchCourses = () => async (dispatch) => {
     dispatch(setCourses(data));
   } catch (error) {
     dispatch(fetchFailure(error));
+  }
+};
+
+export const addUser = (values) => async (dispatch) => {
+  dispatch(loadStart());
+
+  try {
+    await axios.post('http://localhost:8080/user/addUser', values);
+
+    dispatch(postSuccess());
+  } catch (error) {
+    dispatch(postError(error));
   }
 };

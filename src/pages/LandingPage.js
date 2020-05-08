@@ -7,6 +7,7 @@ import LoginScene from '../components/LoginScene/LoginScene';
 import { addUserInputs } from '../utils/addUserInputs';
 import Checkbox from '../components/Checkbox/Checkbox';
 import SelectMenu from '../components/SelectMenu/SelectMenu';
+import { CreateAccountSchema } from '../utils/schemaValidation';
 
 const StyledWrapper = styled.section`
   width: 90%;
@@ -57,12 +58,6 @@ const StyledButton = styled.button`
   }
 `;
 
-const SelectFlexWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 90%;
-`;
-
 const LandingPage = ({ isLoading, universities, courses }) => {
   return (
     <StyledWrapper>
@@ -70,14 +65,15 @@ const LandingPage = ({ isLoading, universities, courses }) => {
         initialValues={{
           name: '',
           lastName: '',
-          albumNumber: '',
-          isAdmin: false,
+          albumNo: '',
+          admin: false,
           universityId: null,
           login: '',
           password: '',
           courseId: null
         }}
         onSubmit={(values) => console.log(values)}
+        validationSchema={CreateAccountSchema}
       >
         {({ values, handleChange, handleBlur, errors, setFieldValue }) => {
           const userInputs = addUserInputs(values, errors);
@@ -95,6 +91,7 @@ const LandingPage = ({ isLoading, universities, courses }) => {
                       type={item.type}
                       value={item.value}
                       name={item.name}
+                      error={item.error}
                       placeholder={item.placeholder}
                     />
                   ))}
@@ -113,8 +110,8 @@ const LandingPage = ({ isLoading, universities, courses }) => {
                     onChange={(event) => setFieldValue('courseId', parseInt(event.target.value))}
                     placeholder={'Kierunek'}
                   />
-                  <Checkbox />
-                  <StyledButton>Submit</StyledButton>
+                  <Checkbox handleChange={handleChange} />
+                  <StyledButton type={'submit'}>Submit</StyledButton>
                 </>
               )}
             </StyledForm>

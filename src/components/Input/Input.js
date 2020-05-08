@@ -11,7 +11,7 @@ const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 3rem;
   flex-direction: row;
   border-radius: 20px;
   transition: all 0.4s ease;
@@ -44,16 +44,18 @@ const StyledInput = styled.input`
   }
 `;
 
-const IconWrapper = styled.div`
+const StyledLabel = styled.label`
+  font-size: 10px;
   position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
+  top: -18px;
+  left: 2rem;
+  color: #ccc;
 `;
 
-const Input = ({ type, value, name, handleChange, handleBlur, placeholder, children }) => {
+const Input = ({ type, value, name, handleChange, handleBlur, placeholder, error }) => {
   return (
     <InputWrapper>
+      <StyledLabel htmlFor={name}>{error}</StyledLabel>
       <StyledInput
         type={type}
         onChange={handleChange}
@@ -62,7 +64,6 @@ const Input = ({ type, value, name, handleChange, handleBlur, placeholder, child
         name={name}
         placeholder={placeholder}
       />
-      <IconWrapper>{children}</IconWrapper>
     </InputWrapper>
   );
 };
