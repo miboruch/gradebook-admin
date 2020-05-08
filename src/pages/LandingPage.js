@@ -64,67 +64,63 @@ const StyledButton = styled.button`
 const LandingPage = ({ isLoading, universities, courses, addUser }) => {
   return (
     <StyledWrapper>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <Formik
-          initialValues={{
-            name: '',
-            lastName: '',
-            albumNo: '',
-            admin: false,
-            universityId: null,
-            login: '',
-            password: '',
-            courseId: null
-          }}
-          onSubmit={(values) => addUser(values)}
-          validationSchema={CreateAccountSchema}
-        >
-          {({ values, handleChange, handleBlur, errors, setFieldValue }) => {
-            const userInputs = addUserInputs(values, errors);
-            return (
-              <StyledForm>
-                {isLoading ? (
-                  <p>spinner</p>
-                ) : (
-                  <>
-                    <StyledHeading>Dodaj użytkownika</StyledHeading>
-                    {userInputs.map((item) => (
-                      <Input
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        type={item.type}
-                        value={item.value}
-                        name={item.name}
-                        error={item.error}
-                        placeholder={item.placeholder}
-                      />
-                    ))}
-                    <SelectMenu
-                      data={universities}
-                      name={'universityId'}
-                      onChange={(event) =>
-                        setFieldValue('universityId', parseInt(event.target.value))
-                      }
-                      placeholder={'Uniwersytet'}
+      <Formik
+        initialValues={{
+          name: '',
+          lastName: '',
+          albumNo: '',
+          admin: false,
+          universityId: null,
+          login: '',
+          password: '',
+          courseId: null
+        }}
+        onSubmit={(values) => addUser(values)}
+        validationSchema={CreateAccountSchema}
+      >
+        {({ values, handleChange, handleBlur, errors, setFieldValue }) => {
+          const userInputs = addUserInputs(values, errors);
+          return (
+            <StyledForm>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <StyledHeading>Dodaj użytkownika</StyledHeading>
+                  {userInputs.map((item) => (
+                    <Input
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      type={item.type}
+                      value={item.value}
+                      name={item.name}
+                      error={item.error}
+                      placeholder={item.placeholder}
                     />
-                    <SelectMenu
-                      data={courses}
-                      areCourses={true}
-                      name={'courseId'}
-                      onChange={(event) => setFieldValue('courseId', parseInt(event.target.value))}
-                      placeholder={'Kierunek'}
-                    />
-                    <Checkbox handleChange={handleChange} />
-                    <StyledButton type={'submit'}>Submit</StyledButton>
-                  </>
-                )}
-              </StyledForm>
-            );
-          }}
-        </Formik>
-      )}
+                  ))}
+                  <SelectMenu
+                    data={universities}
+                    name={'universityId'}
+                    onChange={(event) =>
+                      setFieldValue('universityId', parseInt(event.target.value))
+                    }
+                    placeholder={'Uniwersytet'}
+                  />
+                  <SelectMenu
+                    data={courses}
+                    areCourses={true}
+                    name={'courseId'}
+                    onChange={(event) => setFieldValue('courseId', parseInt(event.target.value))}
+                    placeholder={'Kierunek'}
+                  />
+                  <Checkbox handleChange={handleChange} />
+                  <StyledButton type={'submit'}>Potwierdź</StyledButton>
+                </>
+              )}
+            </StyledForm>
+          );
+        }}
+      </Formik>
       <LoginScene />
     </StyledWrapper>
   );
