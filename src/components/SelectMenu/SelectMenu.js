@@ -39,12 +39,12 @@ const Select = styled.select`
   }
 `;
 
-const SelectMenu = ({ data, onChange, name, areCourses }) => {
+const SelectMenu = ({ data, onChange, name, areCourses, placeholder }) => {
   return (
     <StyledWrapper>
       <Select onChange={onChange} name={name}>
         <option value={null} selected disabled hidden>
-          Wybierz
+          {placeholder}
         </option>
         <>
           {areCourses ? (
@@ -70,7 +70,8 @@ SelectMenu.propTypes = {
   data: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  areCourses: PropTypes.bool
+  areCourses: PropTypes.bool,
+  placeholder: PropTypes.string
 };
 
 SelectMenu.defaultProps = {

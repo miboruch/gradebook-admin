@@ -28,11 +28,5 @@ export const addUserInputs = (values, errors) => [
     value: values.password,
     name: 'password',
     placeholder: errors.name ? errors.name : 'Hasło'
-  },
-  {
-    type: 'text',
-    value: values.course,
-    name: 'course',
-    placeholder: errors.name ? errors.name : 'Kierunek'
   }
 ];

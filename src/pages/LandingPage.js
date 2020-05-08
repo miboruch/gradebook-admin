@@ -57,7 +57,13 @@ const StyledButton = styled.button`
   }
 `;
 
-const LandingPage = ({ isLoading, universities }) => {
+const SelectFlexWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+`;
+
+const LandingPage = ({ isLoading, universities, courses }) => {
   return (
     <StyledWrapper>
       <Formik
@@ -69,7 +75,7 @@ const LandingPage = ({ isLoading, universities }) => {
           universityId: null,
           login: '',
           password: '',
-          course: ''
+          courseId: null
         }}
         onSubmit={(values) => console.log(values)}
       >
@@ -92,14 +98,22 @@ const LandingPage = ({ isLoading, universities }) => {
                       placeholder={item.placeholder}
                     />
                   ))}
-                  <Checkbox />
                   <SelectMenu
                     data={universities}
                     name={'universityId'}
                     onChange={(event) =>
                       setFieldValue('universityId', parseInt(event.target.value))
                     }
+                    placeholder={'Uniwersytet'}
                   />
+                  <SelectMenu
+                    data={courses}
+                    areCourses={true}
+                    name={'courseId'}
+                    onChange={(event) => setFieldValue('courseId', parseInt(event.target.value))}
+                    placeholder={'Kierunek'}
+                  />
+                  <Checkbox />
                   <StyledButton>Submit</StyledButton>
                 </>
               )}
@@ -112,8 +126,8 @@ const LandingPage = ({ isLoading, universities }) => {
   );
 };
 
-const mapStateToProps = ({ mainReducer: { isLoading, universities } }) => {
-  return { isLoading, universities };
+const mapStateToProps = ({ mainReducer: { isLoading, universities, courses } }) => {
+  return { isLoading, universities, courses };
 };
 
 export default connect(mapStateToProps)(LandingPage);

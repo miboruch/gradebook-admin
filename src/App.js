@@ -6,11 +6,12 @@ import SEO from './components/SEO';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './style/theme';
 import GlobalStyle from './style/GlobalStyle';
-import { fetchUniversities } from './actions/mainActions';
+import { fetchCourses, fetchUniversities } from './actions/mainActions';
 
-function App({ fetchUniversities }) {
+function App({ fetchUniversities, fetchCourses }) {
   useEffect(() => {
     fetchUniversities();
+    fetchCourses();
   }, []);
   return (
     <ThemeProvider theme={theme}>
@@ -25,7 +26,8 @@ function App({ fetchUniversities }) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUniversities: () => dispatch(fetchUniversities())
+    fetchUniversities: () => dispatch(fetchUniversities()),
+    fetchCourses: () => dispatch(fetchCourses())
   };
 };
 
