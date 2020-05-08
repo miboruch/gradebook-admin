@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const StyledWrapper = styled.div`
@@ -38,18 +39,42 @@ const Select = styled.select`
   }
 `;
 
-const SelectMenu = () => {
+const SelectMenu = ({ data, onChange, name, areCourses }) => {
   return (
     <StyledWrapper>
-      <Select>
-        <option>test</option>
+      <Select onChange={onChange} name={name}>
+        <option value={null} selected disabled hidden>
+          Wybierz
+        </option>
+        <>
+          {areCourses ? (
+            <>
+              {data.map((item) => (
+                <option value={item.id}>{item.course}</option>
+              ))}
+            </>
+          ) : (
+            <>
+              {data.map((item) => (
+                <option value={item.universityId}>{item.universityName}</option>
+              ))}
+            </>
+          )}
+        </>
       </Select>
     </StyledWrapper>
   );
 };
 
 SelectMenu.propTypes = {
-  currentIndex: PropTypes.string
+  data: PropTypes.any.isRequired,
+  onChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  areCourses: PropTypes.bool
+};
+
+SelectMenu.defaultProps = {
+  areCourses: false
 };
 
 export default SelectMenu;

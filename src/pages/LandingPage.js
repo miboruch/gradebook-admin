@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
+import { connect } from 'react-redux';
 import Input from '../components/Input/Input';
 import LoginScene from '../components/LoginScene/LoginScene';
 import { addUserInputs } from '../utils/addUserInputs';
@@ -50,9 +51,13 @@ const StyledButton = styled.button`
   font-weight: 500;
   border-radius: 20px;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
-const LandingPage = () => {
+const LandingPage = ({ isLoading, universities }) => {
   return (
     <StyledWrapper>
       <Formik
@@ -61,31 +66,43 @@ const LandingPage = () => {
           lastName: '',
           albumNumber: '',
           isAdmin: false,
-          universityId: 0,
+          universityId: null,
           login: '',
           password: '',
           course: ''
         }}
         onSubmit={(values) => console.log(values)}
       >
-        {({ values, handleChange, handleBlur, errors }) => {
+        {({ values, handleChange, handleBlur, errors, setFieldValue }) => {
           const userInputs = addUserInputs(values, errors);
           return (
             <StyledForm>
-              <StyledHeading>Dodaj użytkownika</StyledHeading>
-              {userInputs.map((item) => (
-                <Input
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  type={item.type}
-                  value={item.value}
-                  name={item.name}
-                  placeholder={item.placeholder}
-                />
-              ))}
-              <Checkbox />
-              <SelectMenu />
-              <StyledButton>Submit</StyledButton>
+              {isLoading ? (
+                <p>spinner</p>
+              ) : (
+                <>
+                  <StyledHeading>Dodaj użytkownika</StyledHeading>
+                  {userInputs.map((item) => (
+                    <Input
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      type={item.type}
+                      value={item.value}
+                      name={item.name}
+                      placeholder={item.placeholder}
+                    />
+                  ))}
+                  <Checkbox />
+                  <SelectMenu
+                    data={universities}
+                    name={'universityId'}
+                    onChange={(event) =>
+                      setFieldValue('universityId', parseInt(event.target.value))
+                    }
+                  />
+                  <StyledButton>Submit</StyledButton>
+                </>
+              )}
             </StyledForm>
           );
         }}
@@ -95,4 +112,8 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+const mapStateToProps = ({ mainReducer: { isLoading, universities } }) => {
+  return { isLoading, universities };
+};
+
+export default connect(mapStateToProps)(LandingPage);

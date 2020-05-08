@@ -2,9 +2,11 @@ export const LOAD_START = 'LOAD_START';
 export const LOAD_STOP = 'LOAD_STOP';
 export const SET_UNIVERSITIES = 'SET_UNIVERSITIES';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
+export const SET_COURSES = 'SET_COURSES';
 
 const initialState = {
   universities: [],
+  courses: [],
   isLoading: false,
   error: null
 };
@@ -32,6 +34,12 @@ export const mainReducer = (state = initialState, action) => {
       return {
         ...state,
         universities: action.payload,
+        isLoading: false
+      };
+    case SET_COURSES:
+      return {
+        ...state,
+        courses: action.payload,
         isLoading: false
       };
     default:
