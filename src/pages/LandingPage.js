@@ -68,14 +68,20 @@ const LandingPage = ({ isLoading, universities, courses, addUser }) => {
         initialValues={{
           name: '',
           lastName: '',
-          albumNo: '',
+          albumNo: null,
           admin: false,
           universityId: null,
           login: '',
           password: '',
           courseId: null
         }}
-        onSubmit={(values) => addUser(values)}
+        onSubmit={(values, { resetForm, setFieldValue }) => {
+          console.log(values);
+          resetForm();
+          setFieldValue('admin', false);
+          setFieldValue('courseId', null);
+          setFieldValue('universityId', null);
+        }}
         validationSchema={CreateAccountSchema}
       >
         {({ values, handleChange, handleBlur, errors, setFieldValue }) => {
@@ -96,6 +102,7 @@ const LandingPage = ({ isLoading, universities, courses, addUser }) => {
                       name={item.name}
                       error={item.error}
                       placeholder={item.placeholder}
+                      disabled={item.disabled}
                     />
                   ))}
                   <SelectMenu

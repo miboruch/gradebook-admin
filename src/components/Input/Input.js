@@ -15,6 +15,7 @@ const InputWrapper = styled.div`
   flex-direction: row;
   border-radius: 20px;
   transition: all 0.4s ease;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 
   ${({ theme }) => theme.mq.tablet} {
     width: 550px;
@@ -52,17 +53,18 @@ const StyledLabel = styled.label`
   color: #ccc;
 `;
 
-const Input = ({ type, value, name, handleChange, handleBlur, placeholder, error }) => {
+const Input = ({ type, value, name, handleChange, handleBlur, placeholder, error, disabled }) => {
   return (
-    <InputWrapper>
+    <InputWrapper disabled={disabled}>
       <StyledLabel htmlFor={name}>{error}</StyledLabel>
       <StyledInput
         type={type}
         onChange={handleChange}
         onBlur={handleBlur}
-        value={value}
+        value={disabled ? null : value}
         name={name}
         placeholder={placeholder}
+        disabled={disabled}
       />
     </InputWrapper>
   );
@@ -75,7 +77,8 @@ Input.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
+  disabled: PropTypes.bool
 };
 
 export default Input;

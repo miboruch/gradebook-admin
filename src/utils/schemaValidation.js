@@ -8,7 +8,7 @@ export const CreateAccountSchema = Yup.object().shape({
   albumNo: Yup.string()
     .min(5, 'Numer albumu musi mieć 5 znaków')
     .max(5, 'Numer albumu musi mieć 5 znaków')
-    .required('Numer albumu jest wymagany'),
+    .nullable(),
   admin: Yup.boolean(),
   universityId: Yup.number().required(),
   login: Yup.string().min(2, 'Login musi mieć conajmniej 2 znaki').required('Login jest wymagany'),
