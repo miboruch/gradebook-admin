@@ -104,9 +104,9 @@ export const fetchAllUsers = () => async (dispatch) => {
   dispatch(loadStart());
 
   try {
-    const result = await axios.get(`${API_URL}/user/findAll`);
+    const { data } = await axios.get(`${API_URL}/user/findAll`);
 
-    dispatch(setAccounts(result));
+    dispatch(setAccounts(data));
   } catch (error) {
     dispatch(loadStop());
   }
