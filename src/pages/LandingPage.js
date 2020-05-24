@@ -68,7 +68,7 @@ const AccountsLink = styled(Link)`
   position: absolute;
   bottom: 0;
   left: 0;
-  background-color: #cfcfcf;
+  background-color: #2eae83;
   color: #fff;
   font-size: 14px;
   display: flex;

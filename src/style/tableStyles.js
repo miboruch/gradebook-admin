@@ -1,8 +1,4 @@
 import styled from 'styled-components';
-import UserIcon from '../assets/icons/user.svg';
-import ArrowIcon from '../assets/icons/arrow_half.svg';
-import PresenceIcon from '../assets/icons/checked.svg';
-import AbsenceIcon from '../assets/icons/ban.svg';
 
 export const TableWrapperStyle = styled.div`
   background-color: #fff;
@@ -22,11 +18,7 @@ export const StyledTable = styled.table`
   max-height: 90%;
   padding: 0 1rem;
   position: relative;
-  font-size: 13px;
-
-  ${({ theme }) => theme.mq.standard} {
-    font-size: ${({ isStudentInfoPage }) => (isStudentInfoPage ? '16px' : '14px')};
-  }
+  font-size: 14px;
 `;
 
 export const StyledTableHeading = styled.th`
@@ -77,43 +69,8 @@ export const IconWrapper = styled.div`
   position: relative;
 `;
 
-export const StyledUserIcon = styled(UserIcon)`
-  width: 18px;
-  height: 18px;
-  fill: #fff;
-  position: absolute;
-  padding: 2px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-export const StyledArrowIcon = styled(ArrowIcon)`
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  fill: ${({ theme }) => theme.color.secondFontColor};
-  border: ${({ theme }) => `1px solid ${theme.color.secondFontColor}`};
-  padding: 0.5rem;
-  margin-left: 1rem;
-`;
-
 export const StyledBold = styled.strong`
   font-weight: 600;
-`;
-
-export const StyledPresenceIcon = styled(PresenceIcon)`
-  width: 25px;
-  height: 25px;
-  fill: ${({ theme }) => theme.color.main};
-  margin-left: 1rem;
-`;
-
-export const StyledAbsenceIcon = styled(AbsenceIcon)`
-  width: 25px;
-  height: 25px;
-  fill: red;
-  margin-left: 1rem;
 `;
 
 export const BoldGreenFont = styled.p`

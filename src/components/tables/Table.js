@@ -9,13 +9,13 @@ const StyledParagraph = styled.p`
   letter-spacing: 1px;
 `;
 
-const Table = ({ data, columns, isStudentInfoPage }) => {
+const Table = ({ data, columns }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data
   });
   return (
-    <TableStyles.StyledTable isStudentInfoPage={isStudentInfoPage} {...getTableProps()}>
+    <TableStyles.StyledTable {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <TableStyles.StyledTableRow {...headerGroup.getHeaderGroupProps()}>
@@ -57,12 +57,7 @@ const Table = ({ data, columns, isStudentInfoPage }) => {
 
 Table.propTypes = {
   data: PropTypes.array.isRequired,
-  columns: PropTypes.any.isRequired,
-  isStudentInfoPage: PropTypes.bool
-};
-
-Table.defaultProps = {
-  isStudentInfoPage: false
+  columns: PropTypes.any.isRequired
 };
 
 export default Table;
