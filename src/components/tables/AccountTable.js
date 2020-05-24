@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as TableStyles from '../../style/tableStyles';
 import { ReactComponent as DeleteIcon } from '../../assets/icons/ban.svg';
 import Table from './Table';
+import { deleteUser, setDeleteUser } from '../../actions/mainActions';
 
 const StyledWrapper = styled(TableStyles.TableWrapperStyle)`
   width: 95%;
@@ -16,11 +18,11 @@ const StyledDeleteIcon = styled(DeleteIcon)`
   cursor: pointer;
 `;
 
-const AccountTable = ({ data }) => {
+const AccountTable = ({ data, setDeleteOpen, setDeleteUser, deleteUser }) => {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'ID użytkownika',
+        Header: 'ID',
         accessor: 'userId'
       },
       {
@@ -38,7 +40,16 @@ const AccountTable = ({ data }) => {
       {
         Header: 'Usuń',
         id: 'delete',
-        Cell: () => <StyledDeleteIcon />
+        Cell: ({ row: { values } }) => {
+          return (
+            <StyledDeleteIcon
+              onClick={() => {
+                setDeleteOpen(true);
+                setDeleteUser(values);
+              }}
+            />
+          );
+        }
       }
     ],
     []
@@ -46,8 +57,16 @@ const AccountTable = ({ data }) => {
   return <StyledWrapper>{data && <Table data={data} columns={columns} />}</StyledWrapper>;
 };
 
-AccountTable.propTypes = {
-  data: PropTypes.array.isRequired
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteUser: (userID) => dispatch(deleteUser(userID)),
+    setDeleteUser: (userID) => dispatch(setDeleteUser(userID))
+  };
 };
 
-export default AccountTable;
+AccountTable.propTypes = {
+  data: PropTypes.array.isRequired,
+  setDeleteOpen: PropTypes.func.isRequired
+};
+
+export default connect(null, mapDispatchToProps)(AccountTable);

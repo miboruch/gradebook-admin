@@ -7,7 +7,8 @@ import {
   SET_COURSES,
   POST_ERROR,
   POST_SUCCESS,
-  SET_ACCOUNTS
+  SET_ACCOUNTS,
+  SET_DELETE_USER
 } from '../reducers/mainReducer';
 const API_URL = 'http://localhost:8080';
 
@@ -64,6 +65,13 @@ const setAccounts = (accounts) => {
   };
 };
 
+export const setDeleteUser = (user) => {
+  return {
+    type: SET_DELETE_USER,
+    payload: user
+  };
+};
+
 export const fetchUniversities = () => async (dispatch) => {
   dispatch(loadStart());
 
@@ -109,5 +117,14 @@ export const fetchAllUsers = () => async (dispatch) => {
     dispatch(setAccounts(data));
   } catch (error) {
     dispatch(loadStop());
+  }
+};
+
+export const deleteUser = (userID) => async (dispatch) => {
+  try {
+    await axios.delete(`${API_URL}/user/deleteUser/${userID}`);
+    dispatch(fetchAllUsers());
+  } catch (error) {
+    console.log(error);
   }
 };

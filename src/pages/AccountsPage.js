@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { fetchAllUsers } from '../actions/mainActions';
 import Spinner from '../components/Spinner/Spinner';
 import AccountTable from '../components/tables/AccountTable';
 import { Link } from 'react-router-dom';
+import DeleteBox from '../components/DeleteBox/DeleteBox';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -43,6 +44,8 @@ const AccountsLink = styled(Link)`
 `;
 
 const AccountsPage = ({ accounts, isLoading, fetchAllUsers }) => {
+  const [isDeleteOpen, setDeleteOpen] = useState(false);
+
   useEffect(() => {
     fetchAllUsers();
   }, []);
@@ -54,8 +57,9 @@ const AccountsPage = ({ accounts, isLoading, fetchAllUsers }) => {
       ) : (
         <>
           <StyledHeading>Zarządzaj</StyledHeading>
-          <AccountTable data={accounts} />
+          <AccountTable data={accounts} setDeleteOpen={setDeleteOpen} />
           <AccountsLink to={'/'}>Strona główna</AccountsLink>
+          <DeleteBox isOpen={isDeleteOpen} setOpen={setDeleteOpen} />
         </>
       )}
     </StyledWrapper>

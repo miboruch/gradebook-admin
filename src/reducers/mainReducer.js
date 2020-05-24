@@ -6,11 +6,13 @@ export const SET_COURSES = 'SET_COURSES';
 export const POST_ERROR = 'POST_ERROR';
 export const POST_SUCCESS = 'POST_SUCCESS';
 export const SET_ACCOUNTS = 'SET_ACCOUNTS';
+export const SET_DELETE_USER = 'SET_DELETE_USER';
 
 const initialState = {
   universities: [],
   courses: [],
   accounts: [],
+  deleteUser: null,
   isLoading: false,
   postError: null,
   error: null,
@@ -67,6 +69,11 @@ export const mainReducer = (state = initialState, action) => {
         ...state,
         accounts: action.payload,
         isLoading: false
+      };
+    case SET_DELETE_USER:
+      return {
+        ...state,
+        deleteUser: action.payload
       };
     default:
       return state;
