@@ -10,10 +10,11 @@ import SelectMenu from '../components/SelectMenu/SelectMenu';
 import { CreateAccountSchema } from '../utils/schemaValidation';
 import { addUser } from '../actions/mainActions';
 import Spinner from '../components/Spinner/Spinner';
+import { Link } from 'react-router-dom';
 
 const StyledWrapper = styled.section`
   width: 90%;
-  height: 95vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,7 +46,7 @@ const StyledHeading = styled.h1`
 const StyledButton = styled.button`
   width: 250px;
   height: 40px;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   border: none;
   background-color: #2eae83;
   color: #fff;
@@ -61,7 +62,34 @@ const StyledButton = styled.button`
   }
 `;
 
-const LandingPage = ({ isLoading, universities, courses, addUser }) => {
+const AccountsLink = styled(Link)`
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #cfcfcf;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 2px;
+
+  ${({ theme }) => theme.mq.tablet} {
+    width: 350px;
+    right: 0;
+    left: auto;
+  }
+`;
+
+const PostErrorParagraph = styled.p`
+  font-size: 14px;
+  color: tomato;
+  letter-spacing: 1px;
+`;
+
+const LandingPage = ({ isLoading, universities, courses, addUser, postError }) => {
   return (
     <StyledWrapper>
       <Formik
@@ -76,7 +104,7 @@ const LandingPage = ({ isLoading, universities, courses, addUser }) => {
           courseId: null
         }}
         onSubmit={(values, { resetForm, setFieldValue }) => {
-          console.log(values);
+          addUser(values);
           resetForm();
           setFieldValue('admin', false);
           setFieldValue('courseId', null);
@@ -121,6 +149,9 @@ const LandingPage = ({ isLoading, universities, courses, addUser }) => {
                     placeholder={'Kierunek'}
                   />
                   <Checkbox handleChange={handleChange} />
+                  {postError && (
+                    <PostErrorParagraph>Problem z dodaniem nowego użytkownika</PostErrorParagraph>
+                  )}
                   <StyledButton type={'submit'}>Potwierdź</StyledButton>
                 </>
               )}
@@ -129,12 +160,13 @@ const LandingPage = ({ isLoading, universities, courses, addUser }) => {
         }}
       </Formik>
       <LoginScene />
+      <AccountsLink to={'/accounts'}>Zarządzaj kontami</AccountsLink>
     </StyledWrapper>
   );
 };
 
-const mapStateToProps = ({ mainReducer: { isLoading, universities, courses } }) => {
-  return { isLoading, universities, courses };
+const mapStateToProps = ({ mainReducer: { isLoading, universities, courses, postError } }) => {
+  return { isLoading, universities, courses, postError };
 };
 
 const mapDispatchToProps = (dispatch) => {
