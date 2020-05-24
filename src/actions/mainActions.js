@@ -2,15 +2,24 @@ import axios from 'axios';
 import {
   FETCH_FAILURE,
   LOAD_START,
+  LOAD_STOP,
   SET_UNIVERSITIES,
   SET_COURSES,
   POST_ERROR,
-  POST_SUCCESS
+  POST_SUCCESS,
+  SET_ACCOUNTS
 } from '../reducers/mainReducer';
+const API_URL = 'http://localhost:8080';
 
 const loadStart = () => {
   return {
     type: LOAD_START
+  };
+};
+
+const loadStop = () => {
+  return {
+    type: LOAD_STOP
   };
 };
 
@@ -48,11 +57,18 @@ const postSuccess = () => {
   };
 };
 
+const setAccounts = (accounts) => {
+  return {
+    type: SET_ACCOUNTS,
+    payload: accounts
+  };
+};
+
 export const fetchUniversities = () => async (dispatch) => {
   dispatch(loadStart());
 
   try {
-    const { data } = await axios.get('http://localhost:8080/university/findAll');
+    const { data } = await axios.get(`${API_URL}/university/findAll`);
 
     dispatch(setUniversities(data));
   } catch (error) {
@@ -64,7 +80,7 @@ export const fetchCourses = () => async (dispatch) => {
   dispatch(loadStart());
 
   try {
-    const { data } = await axios.get('http://localhost:8080/courses/findAll');
+    const { data } = await axios.get(`${API_URL}/courses/findAll`);
 
     dispatch(setCourses(data));
   } catch (error) {
@@ -76,10 +92,22 @@ export const addUser = (values) => async (dispatch) => {
   dispatch(loadStart());
 
   try {
-    await axios.post('http://localhost:8080/user/addUser', values);
+    await axios.post(`${API_URL}/user/addUser`, values);
 
     dispatch(postSuccess());
   } catch (error) {
     dispatch(postError(error));
+  }
+};
+
+export const fetchAllUsers = () => async (dispatch) => {
+  dispatch(loadStart());
+
+  try {
+    const result = await axios.get(`${API_URL}/user/findAll`);
+
+    dispatch(setAccounts(result));
+  } catch (error) {
+    dispatch(loadStop());
   }
 };

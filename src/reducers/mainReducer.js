@@ -5,10 +5,12 @@ export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const SET_COURSES = 'SET_COURSES';
 export const POST_ERROR = 'POST_ERROR';
 export const POST_SUCCESS = 'POST_SUCCESS';
+export const SET_ACCOUNTS = 'SET_ACCOUNTS';
 
 const initialState = {
   universities: [],
   courses: [],
+  accounts: [],
   isLoading: false,
   postError: null,
   error: null,
@@ -43,11 +45,11 @@ export const mainReducer = (state = initialState, action) => {
         postError: action.payload
       };
     case POST_SUCCESS:
-      return{
+      return {
         ...state,
         isLoading: false,
         postSuccess: true
-      }
+      };
     case SET_UNIVERSITIES:
       return {
         ...state,
@@ -58,6 +60,12 @@ export const mainReducer = (state = initialState, action) => {
       return {
         ...state,
         courses: action.payload,
+        isLoading: false
+      };
+    case SET_ACCOUNTS:
+      return {
+        ...state,
+        accounts: action.payload,
         isLoading: false
       };
     default:
