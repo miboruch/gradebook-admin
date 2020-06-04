@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import SEO from './components/SEO';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './style/theme';
+import GlobalStyle from './style/GlobalStyle';
+import { fetchCourses, fetchUniversities } from './actions/mainActions';
+import AccountsPage from './pages/AccountsPage';
 
-function App() {
+function App({ fetchUniversities, fetchCourses }) {
+  useEffect(() => {
+    fetchUniversities();
+    fetchCourses();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <SEO />
+      <GlobalStyle />
+      <Router>
+        <Switch>
+          <Route exact path={'/'} component={LandingPage} />
+          <Route exact path={'/accounts'} component={AccountsPage} />
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUniversities: () => dispatch(fetchUniversities()),
+    fetchCourses: () => dispatch(fetchCourses())
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
