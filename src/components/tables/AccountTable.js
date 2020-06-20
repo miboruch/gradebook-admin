@@ -18,7 +18,7 @@ const StyledDeleteIcon = styled(DeleteIcon)`
   cursor: pointer;
 `;
 
-const AccountTable = ({ data, setDeleteOpen, setDeleteUser, deleteUser }) => {
+const AccountTable = ({ data, setDeleteOpen, setDeleteUser }) => {
   const columns = React.useMemo(
     () => [
       {
